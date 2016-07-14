@@ -1,0 +1,33 @@
+class new_num{
+public:
+	int val;
+	int ord;
+};
+bool cmt(new_num a, new_num b){
+	if (a.val < b.val)
+		return true;
+	return false;
+}
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+	int low=0,high=nums.size()-1,i;
+	vector<int> result(2);
+	vector<new_num> nn(nums.size());
+	for (i = 0; i<nums.size(); i++){
+		nn[i].ord = i;
+		nn[i].val = nums[i];
+	}
+	sort(nn.begin(),nn.end(),cmt);
+	while (nn[low].val+nn[high].val!=target){
+		if (nn[low].val + nn[high] .val> target)
+			high--;
+		else{
+			low++;
+		}
+	}
+	result[0] = nn[low].ord;
+	result[1] = nn[high].ord;
+	return result;
+}
+};
