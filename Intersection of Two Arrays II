@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+		map<int, int> alp;
+		vector<int> num;
+		int i,n;
+		for (i = 0; i < nums1.size(); i++)
+			alp[nums1[i]]++;
+		for (i = 0; i < nums2.size(); i++){
+			if (alp[nums2[i]]>0){
+				alp[nums2[i]] --;
+				num.push_back(nums2[i]);
+			}
+		}
+		return num;
+	}
+};
