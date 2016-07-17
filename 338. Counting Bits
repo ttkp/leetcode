@@ -1,0 +1,23 @@
+主要是观察到
+1
+10
+11
+100
+101
+110
+111
+1000
+上述观察到1->10/11  10->100/101 11->110/111
+即循环地在每个数后面加0、1可得接下来的数字。因此第i位就是第i/2位+（i%2）的值。
+
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> v(num + 1);
+        v[0] = 0;
+        for(int i = 1; i < num + 1; i++) {
+            v[i] = v[i >> 1] + i % 2;
+        }
+        return v;
+    }
+};
