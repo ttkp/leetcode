@@ -1,0 +1,23 @@
+vector<int> productExceptSelf(vector<int>& nums) {
+	int i,n;
+	vector<int> left,right,rul;
+	//vector<int> res(nums.size(), 1);这样初始化
+	n = nums.size();
+	left.resize(n);
+	right.resize(n);
+	rul.resize(n);
+	left[0] = 1;
+	for (i =1; i < n; i++){
+		left[i] = nums[i-1]*left[i-1];
+	}
+	right[n-1] = 1;
+	rul[n - 1] = left[n - 1];
+	for (i = n - 2; i >= 0; i--){
+	  //这样更好
+		// res[i] *= right;
+		//right *= nums[i];
+		right[i] = right[i + 1] * nums[i+1];
+		rul[i] = left[i] * right[i];
+	}
+	return rul;
+}
