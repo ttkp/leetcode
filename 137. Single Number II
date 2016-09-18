@@ -1,0 +1,40 @@
+Given an array of integers, every element appears three times except for one. Find that single one.
+
+Note:
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Subscribe to see which companies asked this question
+
+【思路】
+        模拟三进制运算
+        three, two, one     分别表示当前是否已经出现了3个1， 2个1, 1个1
+        0       0   0       表示没有出现1
+        0       0   1       表示出现了1个1
+        0       1   0       表示出现了2个1
+        0       1   1       表示出现了3个1，这时我们需要把它转化成
+        1       0   0       也就是3进制计算的结果，我们得到three=1，然后把two和one清0
+        
+        各位的迭代关系如下：
+        two = (one & A[i]) | two    已经出现了一个1，这次又出现了一个1 或者 这次出现的不是1，但是本来就已经有两个1了
+        one = one ^ A[i]            如果本来就有一个1了，这次又出现一个1，那么这我们需要向two进一位（也就是上一步，将two设成1），这是我们需要将one清为0
+        three = two & one           如果已经出现了3个1，则three为1，此时需要将two和one清0
+        出现3次，最后会被清零，出现0次会被清零，不可能出现2次，最后只剩单独的那一个数。
+class Solution {
+public:
+    int singleNumber(int A[], int n) {
+        int one=0;
+        int two=0;
+        int three=0;
+        
+        for(int i=0; i<n; i++){
+            two= (one & A[i]) | two;
+            one= one ^ A[i];
+            three = one & two;
+            
+            // three=1表示1已经出现了3此，two和one需要清空
+            two &= ~three;
+            one &= ~three;
+        }
+        return one;
+    }
+};
